@@ -40,17 +40,43 @@ tuple, and ___4___ or can be more complicated such as objects and lambda functio
 # How can you adapt that design to work with numbered blanks?
 
 # If you need help, you can sign up for a 1 on 1 coaching appointment: https://calendly.com/ipnd-1-1/20min/
-
-answers1 = {"___1___":"function","___2___": "argument","___3___":"none","___4___": "list"}
+answers1 = {"___1___": "world","___2___": "python","___3___":"print","___4___": "html"}
+answers2 = {"___1___":"function","___2___": "argument","___3___":"none","___4___": "list"}
+answers3 = {"___1___":"","___2___": "argument","___3___":"none","___4___": "list"}
+quesprompt = ["___1___", "___2___", "___3___", "___4___"]
 instructions = "You will get 5 guesses per problem\
 \nThe current paragraph reads as such:\n"
 ###
-spl1 = ''' A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
+spl1 = '''A common first thing to do in a language is display
+'Hello __1__!'  In __2__ this is particularly easy; all you have to do
+is type in:
+__3__ "Hello __1__!"
+Of course, that isn't a very useful thing to do. However, it is an
+example of how to output to the user using the __3__ command, and
+produces a program which does something, so it is useful in that capacity.
+
+It may seem a bit odd to do something in a Turing complete language that
+can be done even more easily with an __4__ file in a browser, but it's
+a step in learning __2__ syntax, and that's really its purpose.'''
+
+spl2 = ''' A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
 adding ___2___ separated by commas between the parentheses. ___1___s by default return ___3___ if you
 don't specify the value to return. ___2___ can be standard data types such as string, number, dictionary,
 tuple, and ___4___ or can be more complicated such as objects and lambda functions.'''
-spl2 = "Test2"
-spl3 = "test3"
+
+spl3 = '''When you create a __1__, certain __2__s are automatically
+generated for you if you don't make them manually. These contain multiple
+underscores before and after the word defining them.  When you write
+a __1__, you almost always include at least the __3__ __2__, defining
+variables for when __4__s of the __1__ get made.  Additionally, you generally
+want to create a __5__ __2__, which will allow a string representation
+of the method to be viewed by other developers.
+
+You can also create binary operators, like __6__ and __7__, which
+allow + and - to be used by __4__s of the __1__.  Similarly, __8__,
+__9__, and __10__ allow __4__s of the __1__ to be compared
+(with <, >, and ==).'''
+
 
 # word = raw_input("Please select a game difficulty by typing it in!\n"
 #   "Possible choices include easy, medium, and hard.\n")
@@ -66,169 +92,50 @@ def selectdiff():
   lvlselect = lvlselect.lower()
   if lvlselect in diffdict:
     return diffdict[lvlselect]
+
+
+def questionprompt():
+  #split this shit up
+  script =  selectdiff()
+  print "\nThe selection reads:\n You will get 5 guesses per problem/n" + script
+  scrlist = []
+  for prompt in quesprompt:
+    counter = 0
+    correct = False
+    print scrlist
+    if prompt in scrlist:
+      print scrlist
+      print prompt
+      print counter
+      continue
+    else:
+      while counter <= 5 and correct == False:
+        user_input = raw_input("What word replaces " + prompt + "in the selection?\n")
+        answer = answers1.get(prompt)
+        if user_input.lower() == answer:
+          scrlist.append(prompt)
+          script = script.replace(prompt, answer)
+          print "\nCorrect! The selection now reads\n " + script
+          correct = True
+          break
+        else:
+          num = 5 - counter
+          counter += 1
+          print ("Incorrect. Please try again.\nYou have  %d tries remaining" % (num))
+          print counter
+      else:
+        print "Answer is incorrect. Out of tries\n GAME OVER BITCH"
+        break
+
+print questionprompt()
+
+
+      
+
+    
     
     
 #print selectdiff()
 
-def popdict():
-  #populates dictionary with sample
-  quesdict = {}
-  sample = selectdiff()
-  sample = sample.split()
-  #return sample
-  for placeholder in sample:
-    if placeholder in answers1:
-      return placeholder
-    
-    
-print popdict()  
 
 
-key = "___1___"
-script = '''A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
-adding ___2___ separated by commas between the parentheses. ___1___s by default return ___3___ if you
-don't specify the value to return. ___2___ can be standard data types such as string, number, dictionary,
-tuple, and ___4___ or can be more complicated such as objects and lambda functions.'''
-words = script.split()
-#print y
-#print x in y
-def example():
-  dict = {}
-  for word in words:
-    if key in word:
-      print "hi"
-      script = script.replace(word, "Eban  is a beast" )
-  print script
-#print example()
-#print script
-
-
-  
-
-'''
-def selectdiff():
-  # returns selected sample or asks to input again if invalid
-  lvlselect = raw_input("Please select a game difficulty by typing it in!\n"
-  "Possible choices include easy, medium, and hard.\n")
-  lvlselect = lvlselect.lower()
-  while True:
-    if lvlselect == "easy":
-      return spl1
-    elif lvlselect == "medium":
-      return spl2
-    elif lvlselect == "hard":
-      return spl3
-    else: 
-      return "Incorrect input. Please try again"
-#print selectdiff(lvlselect) 
-
-# Pseudo Code Step 2 ---> Identify placeholders in script
-def word_in_placeholders(word, placeholders):
-  for pholder in placeholders:
-    if pholder in word:
-      return pholder
-  return None
-#print word_in_placeholders("___1___", spl1.split())
-
-
-# Pseudo Code Step 3 ----> Incorporate word_in_placeholders into a loop to iterate the sample(spl)
-spl = selectdiff()
-spl = spl.split()
-qprompt = word_in_placeholders(word, placeholders)
-#print spl
-def play_game(spl):
-  for 
-  
-    if word in placeholders:
-      return "What should be substituted for " + word
-#print play_game(spl)
-
-
-
-
-
-
-
-
- def word_in_diff( word, diff):
-  #word = word.lower()
- # print "word" word
-  for lvl in diff:
-    #lvl = lvl.lower()
-   # print (" print lvl: " + lvl)
-    if lvl in word:
-      return lvl
-    return None
-#print (" print word_in_diff(word, diff) : " + str(word_in_diff( word, diff )))
-
-def sample_choice():
-  difflvl = word_in_diff( word, diff)
-  print ("difflvl: " + difflvl)
-  while difflvl != None:
-    if difflvl == "easy":
-      return " You have selected easy mode!"
-    elif difflvl == "medium":
-      return " You have selected medium mode"
-    elif difflvl == "hard":
-      return " You have selected hard mode"
-  else: return "Choice invalid. Please try again"
-print sample_choice()
-    
-#def play_game(ml_string, parts_of_speech):    
-#     replaced = []
-#     ml_string = ml_string.split()
-#     for word in ml_string:
-#         replacement = word_in_pos(word, parts_of_speech)
-#         if replacement != None:
-#             user_input = raw_input("Type in a: " + replacement + " ")
-#             word = word.replace(replacement, user_input)
-#             replaced.append(word)
-#         else:
-#             replaced.append(word)
-#     replaced = " ".join(replaced)
-#     return replaced
-     
-
-def difficultylvl():
-  sample = "placeholder"
-  replacement = "placeholder"   
-  script = "You have chosen " + replacement + instructions + sample
-  difficulty = raw_input("Please select a game difficulty by typing it in!\n"
-  "Possible choices include easy, medium, and hard.\n")
-  while difficulty == "easy" or "medium" or "hard":
-      replacement = difficulty
-      sample = word.replace(replacement, )
-      script = "You have chosen "  + replacement + "! " + instructions +
-      return script
-
-instructions =  "\n You will get 5 guesses per problem\n\
-The current paragraph reads as such:\n"
-difficulty = raw_input("Please select a game difficulty by typing it in!\n")
-
-
-
-def difflvl():
-  while difficulty is "easy" or "medium" or "hard":
-    print difficulty
-    if difficulty == "easy":
-      replacement = difficulty
-      time.sleep(1)
-      print "\n You have chosen easy!\n"
-      time.sleep(2)
-      return instructions + spl1
-    elif difficulty == "medium":
-      time.sleep(1)
-      print "\n You have chosen medium"
-      time.sleep(2)
-      return instructions + spl2
-    elif difficulty == "hard":
-      time.sleep(1)
-      print "\nI bet you like it hard\n"
-      time.sleep(2)
-      return instructions + spl2
-  else:
-    return "Error, Please try again."
-print difflvl()
-
-#def play_game(): 
-'''

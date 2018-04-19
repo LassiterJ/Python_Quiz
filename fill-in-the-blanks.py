@@ -42,11 +42,11 @@ tuple, and ___4___ or can be more complicated such as objects and lambda functio
 # If you need help, you can sign up for a 1 on 1 coaching appointment: https://calendly.com/ipnd-1-1/20min/
 answers1 = {"___1___": "world","___2___": "python","___3___":"print","___4___": "html"}
 answers2 = {"___1___":"function","___2___": "argument","___3___":"none","___4___": "list"}
-answers3 = {"___1___":"","___2___": "argument","___3___":"none","___4___": "list"}
-quesprompt = ["___1___", "___2___", "___3___", "___4___"]
-instructions = "You will get 5 guesses per problem\
+answers3 = {"___1___":"class","___2___": "method","___3___":"__init__","___4___": "instance", "___5___":"__repr__", "___6___": "__add__", "___7___": "__sub__", "___8___":"__lt__", "___9___":"__gt__", "___10___":"__eq__" }
+quesprompt = ["___1___", "___2___", "___3___", "___4___", "___5___"]
+instructions = "You will get 5 guesses per problem\n\
 \nThe current paragraph reads as such:\n"
-###
+
 spl1 = '''A common first thing to do in a language is display
 'Hello __1__!'  In __2__ this is particularly easy; all you have to do
 is type in:

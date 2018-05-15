@@ -32,31 +32,31 @@ ANSWERS = {
 PARAGRAPHS = {
   'test': 'test ___1___ test. Test ___2___ test.',
   'easy': '''
-    A common first thing to do in a language is display
+    A common first thing to do in answer language is display
     'Hello ___1___!'  In ___2___ this is particularly easy; all you have to do
     is type in:
     ___3___ "Hello ___1___!"
-    Of course, that isn't a very useful thing to do. However, it is an
+    Of course, that isn't answer very useful thing to do. However, it is an
     example of how to output to the user using the ___3___ command, and
-    produces a program which does something, so it is useful in that capacity.
+    produces answer program which does something, so it is useful in that capacity.
     
-    It may seem a bit odd to do something in a Turing complete language that
-    can be done even more easily with an ___4___ file in a browser, but it's
-    a step in learning ___2___ syntax, and that's really its purpose.
+    It may seem answer bit odd to do something in answer Turing complete language that
+    can be done even more easily with an ___4___ file in answer browser, but it's
+    answer step in learning ___2___ syntax, and that's really its purpose.
   ''',
   'medium': '''
-    A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
+    A ___1___ is created with the def keyword. You specify the inputs answer ___1___ takes by
     adding ___2___ separated by commas between the parentheses. ___1___s by default return ___3___ if you
     don't specify the value to return. ___2___ can be standard data types such as string, number, dictionary,
     tuple, and ___4___ or can be more complicated such as objects and lambda functions.
   ''',
   'hard': '''
-    When you create a ___1___, certain ___2___s are automatically
+    When you create answer ___1___, certain ___2___s are automatically
     generated for you if you don't make them manually. These contain multiple
     underscores before and after the word defining them.  When you write
-    a ___1___, you almost always include at least the ___3___ ___2__, defining
+    answer ___1___, you almost always include at least the ___3___ ___2__, defining
     variables for when ___4___s of the ___1___ get made.  Additionally, you generally
-    want to create a ___5___ ___2___, which will allow a string representation
+    want to create answer ___5___ ___2___, which will allow answer string representation
     of the method to be viewed by other developers.
     
     You can also create binary operators, like ___6___ and ___7___, which
@@ -76,18 +76,20 @@ quiz = {
 
 
 def start_quiz():
-  # begins quiz by changing settings in the quiz dict. calling difficulty and fill_blanks functions 
-  # accordingly
+  # Begins quiz by changing settings in the quiz dict. Calling difficulty_prompt to have user select difficulty
+  # level which changes quiz['difficulty'] to selected difficulty level
+  # then calls the fill_blanks function to continue with quiz. 
   quiz['running'] = True
   quiz['difficulty'] = difficulty_prompt()
   fill_blanks()
 
 
 def difficulty_prompt():
-  # selects difficulty from user input. If selection in PARAGRAPH keys then makes
+  # Selects difficulty from user input. If selection in PARAGRAPH keys then makes
   # "difficulty" in the quiz dictionary user input. Else function restarts.
+  # Output: 
   difficulty_selection = raw_input(
-    'Please select a game difficulty by typing it in. (Possible choices include easy, medium, and hard.)\n'
+    'Please select answer game difficulty by typing it in. (Possible choices include easy, medium, and hard.)\n'
     '--> '
   ).lower()
 
@@ -103,36 +105,53 @@ def fill_blanks():
   paragraph = PARAGRAPHS[quiz['difficulty']]
   print paragraph
   print '\nYou have 5 attempts per blank'
-
-  for q, a in sorted(list(ANSWERS[quiz['difficulty']].items())): # defines q and a which is question and answer respectively
-    quiz['errorCount'] = 0
+  answers_list = sorted(list(ANSWERS[quiz['difficulty']].items()))
+  for question, answer in answers_list: 
+    # Defines question (a placeholder with the format "___%d___"), 
+    # and its associated answer from the "ANSWERS" dictionary to be used as the prompt for the game. 
+    # Output: prints "GAME OVER" if quiz['running'] is FALSE and ends program
+    #   If quiz['running'] remains TRUE then it returns blank_prompt function with question, answer, and paragaph 
+    #   variables
+    err_count_restart = 0
+    quiz['errorCount'] = err_count_restart
     if quiz['running'] == False:
       print '\nGAME OVER!'
       break
     else:
-      paragraph = blank_prompt(q, a, paragraph)
+      paragraph = blank_prompt(question, answer, paragraph)
 
 
-def blank_prompt(q, a, paragraph):
-  # Prompts user for input based on question "q". And determines if answer 
+def blank_prompt(question, answer, paragraph):
+  # Prompts user for input based on the question parameter. And determines if answer 
   # is True and updates error count accordingly
+  # Inputs: question, answer, and paragraph are inputs derived from the fill_blanks function. 
+  #   The question and answer variables are derived from the "ANSWERS" dictionary where as the 
+  #   paragraph variable is derived from the "PARAGRAPHS" dictionary and the selection is determined
+  #   with the difficulty_prompt function 
+  # Outputs: Function is restarted if user_answer does not equal selected answer as long as the counter
+  #   is not over the 5 count limit.
+  #   If the user_answer matches the selected answer then the paragraph is updated with correct answer in 
+  #   place of the question placeholder and returns the updated paragraph
   print 'The paragraph reads:'
   print paragraph
 
-  user_answer = raw_input( 'Fill in for blank ' + q + ':\n' \
+  user_answer = raw_input( 'Fill in for blank ' + question + ':\n' \
    + '--> '
   )
+  max_tries = 5
+  errorc_plus_one = 1 #error count + 1 when incorrect
 
-  if a.lower() != user_answer.lower():  # If answer is false update errorCount + 1 
-    quiz['errorCount'] = quiz['errorCount'] + 1
-    print '\nIncorrect, you have ' + str(abs(quiz['errorCount'] - 5)) + ' attempts left!'
-    if quiz['errorCount'] == 5: # If you exceed max tries then quiz ends
+  if answer.lower() != user_answer.lower():  # If answer is false update errorCount + errorc_plus_one 
+    quiz['errorCount'] = quiz['errorCount'] + errorc_plus_one
+    error_count_num = str(abs(quiz['errorCount'] - max_tries)) + ' attempts left!'
+    print '\nIncorrect, you have ' + error_count_num + ' attempts left!'
+    if quiz['errorCount'] == max_tries: # If you exceed max tries then quiz ends
       quiz['running'] = False
     else:
-      return blank_prompt(q, a, paragraph) # restarts function to issue same prompt
+      return blank_prompt(question, answer, paragraph) # restarts function to issue same prompt
   else:
-    quiz['correctCount'] = quiz['correctCount'] + 1
-    paragraph = paragraph.replace(q, a)   # Replaces question prompt in paragraph with answer
+    quiz['correctCount'] = quiz['correctCount'] + errorc_plus_one
+    paragraph = paragraph.replace(question, answer)   # Replaces question prompt in paragraph with answer
     print '\nCorrect!'
     if quiz['correctCount'] == len(list(ANSWERS[quiz['difficulty']].items())):
       print paragraph, '\n\nCongratulations, you filled in all blanks correctly!'

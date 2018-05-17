@@ -123,32 +123,32 @@ def question_loop(answers_list):
     else:
       game_running(question,correct_answer)
 def game_running(question, correct_answer):
-      # Asks for user input and runs checkUserAnswer if its correct.
-      # If checkUserAnswer returns True then functions onCorrectUserAnswer and checkEndQuestions run
+      # Asks for user input and runs check_user_answer if its correct.
+      # If check_user_answer returns True then functions on_correct_user_answer and check_end_questions run
       #   and loop is broken.
-      # If checkUserAnswer is False onIncorrectUserAnswer and too_many_attempts runs
+      # If check_user_answer is False on_incorrect_user_answer and too_many_attempts runs
       # Inputs question, correct_answer
       while quiz['running'] == True:
-        user_answer = askQuestion(question)
-        is_correct = checkUserAnswer(correct_answer, user_answer)
+        user_answer = ask_question(question)
+        is_correct = check_user_answer(correct_answer, user_answer)
         if (is_correct == True):
-          onCorrectUserAnswer(question, correct_answer)
-          checkEndQuestions()
+          on_correct_user_answer(question, correct_answer)
+          check_end_questions()
           break
 
         else:
-          onIncorrectUserAnswer()
+          on_incorrect_user_answer()
           too_many_attempts()
           
 
-def askQuestion(question):
+def ask_question(question):
   # Prompts user to fill in the blank
   # Inputs: question
   # outputs user's answer to question prompt 
   answer = raw_input( '\nFill in for blank ' + question + ':\n' + '--> ')
   return answer
 
-def checkUserAnswer(correct_answer, user_answer):
+def check_user_answer(correct_answer, user_answer):
   # Checks if user_answer matches the correct_answer
   # Inputs: correct_answer, user_answer
   # Output: True or False
@@ -157,7 +157,7 @@ def checkUserAnswer(correct_answer, user_answer):
   else:
     return False
 
-def checkEndQuestions():
+def check_end_questions():
   # Checks if there are any questions left in the game. 
   # If there are none then game is won and paragraph is printed with congratulations prompt
   # Else returns False
@@ -170,7 +170,7 @@ def checkEndQuestions():
     return False
 
 
-def onCorrectUserAnswer(question, correct_answer):
+def on_correct_user_answer(question, correct_answer):
   # When user gets question correct this function resets error count, adds 1 to correct count,
   #   replaces question prompt with correct answer and prints new paragraph
   # Inputs: question, and correct_answer
@@ -183,7 +183,7 @@ def onCorrectUserAnswer(question, correct_answer):
   quiz['paragraph'] = paragraph.replace(question, correct_answer)
   print "Your paragraph now reads:\n",quiz["paragraph"] 
 
-def onIncorrectUserAnswer():
+def on_incorrect_user_answer():
   # When user gets the question incorrect this function adds 1 to the error count
   # prints incorrect prompt with remaining attempts count and reprints paragraph
    max_tries = 5
